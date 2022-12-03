@@ -180,6 +180,58 @@ func task02_2(_ input: TaskInput) {
     print("T02_2: \(score)")
 }
 
+extension TaskInput {
+    enum Task03 {
+        static func priority(_ ch: Character) -> Int {
+            switch ch {
+            case "a"..."z":
+                return Int(ch.asciiValue! - "a".first!.asciiValue!) + 1
+            case "A"..."Z":
+                return Int(ch.asciiValue! - "A".first!.asciiValue!) + 27
+            default:
+                fatalError()
+            }
+        }
+    }
+    
+    func task03() -> [([Character], [Character])] {
+        readInput("03")
+            .split(separator: "\n")
+            .map { line in
+                let chars = Array(line)
+                let half = chars.count / 2
+                return (Array(chars.prefix(half)), Array(chars.suffix(half)))
+            }
+    }
+}
+
+func task03_1(_ input: TaskInput) {
+    let rsks = input.task03()
+    let score = rsks
+        .map { (a, b) in Set(a).intersection(Set(b)).first! }
+        .map(TaskInput.Task03.priority)
+        .reduce(0, +)
+    print("T03_1: \(score)")
+}
+
+func task03_2(_ input: TaskInput) {
+    let rsks = input.task03()
+        .map { $0.0 + $0.1 }
+        .map(Set.init)
+    let groups = (0..<(rsks.count / 3))
+        .map { idx -> [Set<Character>] in [rsks[idx * 3], rsks[idx * 3 + 1], rsks[idx * 3 + 2]] }
+    let score = groups
+        .map { grp -> Character in
+            grp[0]
+                .intersection(grp[1])
+                .intersection(grp[2])
+                .first!
+        }
+        .map(TaskInput.Task03.priority)
+        .reduce(0, +)
+    print("T03_2: \(score)")
+}
+
 // MARK: - Main
 
 let inputs = [
@@ -193,8 +245,11 @@ for input in inputs {
 //    task01_1(input)
 //    task01_2(input)
   
-    task02_1(input)
-    task02_2(input)
+//    task02_1(input)
+//    task02_2(input)
+    
+    task03_1(input)
+    task03_2(input)
 
     print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
 }
