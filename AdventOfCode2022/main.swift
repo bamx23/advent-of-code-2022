@@ -180,6 +180,8 @@ func task02_2(_ input: TaskInput) {
     print("T02_2: \(score)")
 }
 
+// MARK: - Day 03
+
 extension TaskInput {
     enum Task03 {
         static func priority(_ ch: Character) -> Int {
@@ -232,6 +234,52 @@ func task03_2(_ input: TaskInput) {
     print("T03_2: \(score)")
 }
 
+// MARK: - Day 04
+
+extension TaskInput {
+    enum Task04 {
+    }
+    
+    func task04() -> [(ClosedRange<Int>, ClosedRange<Int>)] {
+        readInput("04")
+            .split(separator: "\n")
+            .map { line in
+                let pair = line
+                    .split(separator: ",")
+                    .map { s in
+                        s.split(separator: "-")
+                            .map { Int($0)! }
+                    }
+                    .map { a in ClosedRange(uncheckedBounds: (a[0], a[1])) }
+                return (pair[0], pair[1])
+            }
+    }
+}
+
+func task04_1(_ input: TaskInput) {
+    let jobs = input.task04()
+    let number = jobs
+        .filter { (a, b) in
+            (a.contains(b.lowerBound) && a.contains(b.upperBound))
+            ||
+            (b.contains(a.lowerBound) && b.contains(a.upperBound))
+        }
+        .count
+    print("T04_1: \(number)")
+}
+
+func task04_2(_ input: TaskInput) {
+    let jobs = input.task04()
+    let number = jobs
+        .filter { (a, b) in
+            a.contains(b.lowerBound) || a.contains(b.upperBound)
+            ||
+            b.contains(a.lowerBound) || b.contains(a.upperBound)
+        }
+        .count
+    print("T04_2: \(number)")
+}
+
 // MARK: - Main
 
 let inputs = [
@@ -248,8 +296,11 @@ for input in inputs {
 //    task02_1(input)
 //    task02_2(input)
     
-    task03_1(input)
-    task03_2(input)
+//    task03_1(input)
+//    task03_2(input)
+    
+    task04_1(input)
+    task04_2(input)
 
     print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
 }
