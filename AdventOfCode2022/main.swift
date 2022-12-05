@@ -280,6 +280,93 @@ func task04_2(_ input: TaskInput) {
     print("T04_2: \(number)")
 }
 
+// MARK: - Day 05
+
+extension TaskInput {
+    enum Task05 {
+        struct Move {
+            var count: Int
+            var fromIdx: Int
+            var toIdx: Int
+        }
+
+        enum Version {
+            case CrateMover9000
+            case CrateMover9001
+        }
+
+        static func apply(stacks: [[Character]], move: Move, version: Version) -> [[Character]] {
+            var movingStack = stacks[move.fromIdx].suffix(move.count)
+            if version == .CrateMover9000 {
+                movingStack.reverse()
+            }
+            var result = stacks
+            result[move.fromIdx].removeLast(move.count)
+            result[move.toIdx].append(contentsOf: movingStack)
+            return result
+        }
+
+        static func printStacks(_ stacks: [[Character]]) {
+            let height = stacks.map(\.count).max()!
+            for y in 0..<height {
+                print(stacks.map { ($0.count >= height - y) ? "[\($0[height - y - 1])]" : "   " }.joined(separator: " "))
+            }
+            print((1...stacks.count).map { " \($0) " }.joined(separator: " "))
+        }
+    }
+    
+    func task05() -> ([[Character]], [Task05.Move]) {
+        let lines = readInput("05")
+            .split(separator: "\n")
+            .map(Array.init)
+
+        var stacks = [[Character]]()
+        var idx = 0
+        while lines[idx][1] != "1" {
+            let line = lines[idx]
+            let stacksCount = (line.count + 1) / 4
+            if stacks.count < stacksCount {
+                stacks += Array(repeating: [], count: stacksCount - stacks.count)
+            }
+            for k in 0..<stacksCount {
+                let ch = lines[idx][k * 4 + 1]
+                if ch != " " {
+                    stacks[k].append(ch)
+                }
+            }
+            idx += 1
+        }
+        stacks = stacks.map { $0.reversed() }
+
+        let moves = lines
+            .dropFirst(idx + 1)
+            .map { line in
+                let parts = line.split(separator: " ").compactMap { Int(String($0)) }
+                return Task05.Move(count: parts[0], fromIdx: parts[1] - 1, toIdx: parts[2] - 1)
+            }
+
+        return (stacks, moves)
+    }
+}
+
+func task05_1(_ input: TaskInput) {
+    let (stacks, moves) = input.task05()
+    let result = moves
+        .reduce(stacks) { TaskInput.Task05.apply(stacks: $0, move: $1, version: .CrateMover9000) }
+        .compactMap { $0.last }
+
+    print("T05_1: \(String(result))")
+}
+
+func task05_2(_ input: TaskInput) {
+    let (stacks, moves) = input.task05()
+    let result = moves
+        .reduce(stacks) { TaskInput.Task05.apply(stacks: $0, move: $1, version: .CrateMover9001) }
+        .compactMap { $0.last }
+
+    print("T05_2: \(String(result))")
+}
+
 // MARK: - Main
 
 let inputs = [
@@ -292,15 +379,18 @@ for input in inputs {
     let start = Date()
 //    task01_1(input)
 //    task01_2(input)
-  
+
 //    task02_1(input)
 //    task02_2(input)
-    
+
 //    task03_1(input)
 //    task03_2(input)
-    
-    task04_1(input)
-    task04_2(input)
+
+//    task04_1(input)
+//    task04_2(input)
+
+    task05_1(input)
+    task05_2(input)
 
     print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
 }
