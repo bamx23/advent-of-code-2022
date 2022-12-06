@@ -367,6 +367,45 @@ func task05_2(_ input: TaskInput) {
     print("T05_2: \(String(result))")
 }
 
+// MARK: - Day 06
+
+extension TaskInput {
+    enum Task06 {
+        static func findSignal(_ line: Substring, len: Int) -> Int {
+            let line = Array(line)
+            var cur = " " + line.prefix(len - 1)
+            var idx = len - 1
+            while idx < line.count {
+                cur = cur.dropFirst() + String(line[idx])
+                idx += 1
+                if Set(cur).count == cur.count {
+                    return idx
+                }
+            }
+            return 0
+        }
+    }
+
+    func task06() -> [Substring] {
+        readInput("06")
+            .split(separator: "\n")
+    }
+}
+
+func task06_1(_ input: TaskInput) {
+    let lines = input.task06()
+    let signals = lines
+        .map { TaskInput.Task06.findSignal($0, len: 4) }
+    print("T06_1: \(signals)")
+}
+
+func task06_2(_ input: TaskInput) {
+    let lines = input.task06()
+    let signals = lines
+        .map { TaskInput.Task06.findSignal($0, len: 14) }
+    print("T06_2: \(signals)")
+}
+
 // MARK: - Main
 
 let inputs = [
@@ -389,8 +428,11 @@ for input in inputs {
 //    task04_1(input)
 //    task04_2(input)
 
-    task05_1(input)
-    task05_2(input)
+//    task05_1(input)
+//    task05_2(input)
+
+    task06_1(input)
+    task06_2(input)
 
     print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
 }
