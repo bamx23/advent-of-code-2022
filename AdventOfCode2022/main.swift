@@ -548,6 +548,127 @@ func task07_2(_ input: TaskInput) {
     print("T07_2: \(removing)")
 }
 
+// MARK: - Day 08
+
+extension TaskInput {
+    enum Task08 {
+        static func visibilityLevels(_ map: [[Int]]) -> [[Int]] {
+            let h = map.count
+            let w = map.first!.count
+            var visibility = [[Int]](repeating: [Int](repeating: 0, count: w), count: h)
+            var maxBefore = 0
+            
+            for y in 0..<h {
+                visibility[y][0] += 1
+                maxBefore = map[y][0]
+                for x in 1..<w {
+                    if map[y][x] > maxBefore {
+                        visibility[y][x] += 1
+                        maxBefore = map[y][x]
+                        if (maxBefore == 9) { break }
+                    }
+                }
+                visibility[y][w - 1] += 1
+                maxBefore = map[y][w - 1]
+                for x in (0..<(w - 1)).reversed() {
+                    if map[y][x] > maxBefore {
+                        visibility[y][x] += 1
+                        maxBefore = map[y][x]
+                        if (maxBefore == 9) { break }
+                    }
+                }
+            }
+            for x in 0..<w {
+                visibility[0][x] += 1
+                maxBefore = map[0][x]
+                for y in 1..<h {
+                    if map[y][x] > maxBefore {
+                        visibility[y][x] += 1
+                        maxBefore = map[y][x]
+                        if (maxBefore == 9) { break }
+                    }
+                }
+                visibility[h - 1][x] += 1
+                maxBefore = map[h - 1][x]
+                for y in (0..<(h - 1)).reversed() {
+                    if map[y][x] > maxBefore {
+                        visibility[y][x] += 1
+                        maxBefore = map[y][x]
+                        if (maxBefore == 9) { break }
+                    }
+                }
+            }
+
+            return visibility
+        }
+        
+        static func scores(_ map: [[Int]]) -> [[Int]] {
+            let h = map.count
+            let w = map.first!.count
+            var scores = [[Int]](repeating: [Int](repeating: 0, count: w), count: h)
+            
+            for y in 1..<(h - 1) {
+                for x in 1..<(w - 1) {
+//                    print("\(y) \(x) \(map[y][x])")
+                    var score = 1
+                    for (dx, dy) in [(0, -1), (-1, 0), (1, 0), (0, 1)] {
+                        var (nx, ny) = (x + dx, y + dy)
+                        var dirScore = 0
+                        while 0 <= nx && nx < w && 0 <= ny && ny < h {
+                            if map[ny][nx] >= map[y][x] {
+                                dirScore += 1
+                                break
+                            }
+                            (nx, ny) = (nx + dx, ny + dy)
+                            dirScore += 1
+                        }
+//                        print(dirScore)
+                        score *= dirScore
+                    }
+//                    print(score)
+                    scores[y][x] = score
+                }
+            }
+
+            return scores
+        }
+        
+        static func printMap(_ map: [[Int]]) {
+            for l in map {
+                print(l.map { "\($0)" }.joined())
+            }
+        }
+    }
+
+    func task08() -> [[Int]] {
+        readInput("08")
+            .split(separator: "\n")
+            .map { line in
+                line.map { $0.wholeNumberValue! }
+            }
+    }
+}
+
+func task08_1(_ input: TaskInput) {
+    let map = input.task08()
+    let visibility = TaskInput.Task08.visibilityLevels(map)
+//    TaskInput.Task08.printMap(visibility)
+    let count = visibility
+        .map { l in l.filter { $0 > 0 }.count }
+        .reduce(0, +)
+    print("T08_1: \(count)")
+}
+
+func task08_2(_ input: TaskInput) {
+    let map = input.task08()
+    let scores = TaskInput.Task08.scores(map)
+    TaskInput.Task08.printMap(scores)
+    let best = scores
+        .map { $0.max()! }
+        .max()!
+    print("T08_2: \(best)")
+}
+
 // MARK: - Main
 
 let inputs = [
@@ -576,8 +697,11 @@ for input in inputs {
 //    task06_1(input)
 //    task06_2(input)
 
-    task07_1(input)
-    task07_2(input)
+//    task07_1(input)
+//    task07_2(input)
+    
+    task08_1(input)
+    task08_2(input)
 
     print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
 }
