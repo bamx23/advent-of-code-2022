@@ -669,6 +669,153 @@ func task08_2(_ input: TaskInput) {
     print("T08_2: \(best)")
 }
 
+// MARK: - Day 09
+
+extension TaskInput {
+    enum Task09 {
+        enum Move: String {
+            case up = "U"
+            case down = "D"
+            case left = "L"
+            case right = "R"
+        }
+        
+        typealias Pos = (x: Int, y: Int)
+        
+        static func moveHead(head: Pos, move: Move) -> Pos {
+            let dir = move.dir
+            let newHead: Pos = (x: head.x + dir.x, y: head.y + dir.y)
+            return newHead
+        }
+        
+        static func followHead(head: Pos, tail: Pos) -> Pos {
+            let delta: Pos = (x: head.x - tail.x, y: head.y - tail.y)
+            
+            func short(_ delta: Int) -> Int {
+                if delta >= 1 { return 1 }
+                if delta <= -1 { return -1 }
+                return 0
+            }
+            
+            switch delta {
+            case (x: 0, y: 0):
+                return head
+            case (x: 0, y: let y) where y != 0:
+                return (x: head.x, y: head.y - short(y))
+            case (x: let x, y: 0) where x != 0:
+                return (x: head.x - short(x), y: head.y)
+            case (x: let x, y: let y) where abs(x) == 1 && abs(y) == 1:
+                return tail
+            case (x: let x, y: let y) where abs(x) == 1 && abs(y) == 2:
+                return (x: head.x, y: head.y - short(y))
+            case (x: let x, y: let y) where abs(x) == 2 && abs(y) == 1:
+                return (x: head.x - short(x), y: head.y)
+            case (x: let x, y: let y) where abs(x) == 2 && abs(y) == 2:
+                return (x: head.x - short(x), y: head.y - short(y))
+            default:
+                fatalError()
+            }
+        }
+        
+        static func printField(rope: [Pos], size: (Int, Int)) {
+            for y in (0..<size.0).reversed() {
+                var line = ""
+                for x in (0..<size.1) {
+                    var found = false
+                    for (idx, p) in rope.enumerated() {
+                        if x == p.x && y == p.y {
+                            if idx == 0 {
+                                line += "H"
+                            } else if idx == rope.count - 1 {
+                                line += "T"
+                            } else {
+                                line += "\(idx)"
+                            }
+                            found = true
+                            break
+                        }
+                    }
+                    if (found) {
+                        continue
+                    }
+                    if (x == 0 && y == 0) {
+                        line += "s"
+                        continue
+                    }
+                    line += "."
+                }
+                print(line)
+            }
+        }
+    }
+
+    func task09() -> [(Task09.Move, Int)] {
+        readInput("09")
+            .split(separator: "\n")
+            .map { line in
+                let pair = line.split(separator: " ")
+                return (.init(rawValue: String(pair[0]))!, Int(pair[1])!)
+            }
+    }
+}
+
+extension TaskInput.Task09.Move {
+    var dir: TaskInput.Task09.Pos {
+        switch self {
+        case .right:
+            return (1, 0)
+        case .left:
+            return (-1, 0)
+        case .down:
+            return (0, -1)
+        case .up:
+            return (0, 1)
+        }
+    }
+}
+
+func task09_1(_ input: TaskInput) {
+    let moves = input.task09()
+    var head: TaskInput.Task09.Pos = (x: 0, y: 0)
+    var tail = head
+    var visited = [0: [0: 1]]
+    for (move, count) in moves {
+//        print("\n== \(move.rawValue) \(count) ==\n")
+        for _ in 0..<count {
+            head = TaskInput.Task09.moveHead(head: head, move: move)
+            tail = TaskInput.Task09.followHead(head: head, tail: tail)
+            visited[tail.y, default: [:]][tail.x, default: 0] += 1
+//            TaskInput.Task09.printField(rope: [head, tail], size: (6, 6))
+//            print("")
+        }
+    }
+    let numVisited = visited.values.map(\.count).reduce(0, +)
+    print("T09_1: \(numVisited)")
+}
+
+func task09_2(_ input: TaskInput) {
+    let moves = input.task09()
+    let len = 10
+    var rope: [TaskInput.Task09.Pos] = .init(repeating: (0, 0), count: len)
+    var visited = [0: [0: 1]]
+    for (move, count) in moves {
+//        print("\n== \(move.rawValue) \(count) ==\n")
+        for _ in 0..<count {
+            var newRope = rope
+            newRope[0] = TaskInput.Task09.moveHead(head: rope[0], move: move)
+            for idx in 1..<len {
+                newRope[idx] = TaskInput.Task09.followHead(head: newRope[idx - 1], tail: newRope[idx])
+            }
+            rope = newRope
+            visited[rope.last!.y, default: [:]][rope.last!.x, default: 0] += 1
+//            TaskInput.Task09.printField(rope: rope, size: (6, 6))
+//            print("")
+        }
+    }
+    let numVisited = visited.values.map(\.count).reduce(0, +)
+    print("T09_2: \(numVisited)")
+}
+
 // MARK: - Main
 
 let inputs = [
@@ -700,8 +847,11 @@ for input in inputs {
 //    task07_1(input)
 //    task07_2(input)
     
-    task08_1(input)
-    task08_2(input)
+//    task08_1(input)
+//    task08_2(input)
+    
+    task09_1(input)
+    task09_2(input)
 
     print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
 }
