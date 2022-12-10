@@ -816,6 +816,88 @@ func task09_2(_ input: TaskInput) {
     print("T09_2: \(numVisited)")
 }
 
+// MARK: - Day 10
+
+extension TaskInput {
+    enum Task10 {
+        enum Cmd {
+            case noop
+            case add(Int)
+        }
+    }
+
+    func task10() -> [Task10.Cmd] {
+        readInput("10")
+            .split(separator: "\n")
+            .map { line in
+                let pair = line.split(separator: " ")
+                switch pair[0] {
+                case "noop":
+                    return .noop
+                case "addx":
+                    return .add(Int(pair[1])!)
+                default:
+                    fatalError()
+                }
+            }
+    }
+}
+
+func task10_1(_ input: TaskInput) {
+    let cmds = input.task10()
+    var x = 1
+    var cycle = 1
+    var result = 0
+    
+    func cycleInc() {
+        if [20, 60, 100, 140, 180, 220].contains(cycle) {
+            result += cycle * x
+        }
+        cycle += 1
+    }
+    
+    for cmd in cmds {
+        switch cmd {
+        case .noop:
+            cycleInc()
+        case .add(let val):
+            cycleInc()
+            cycleInc()
+            x += val
+        }
+    }
+    print("T10_1: \(result)")
+}
+
+func task10_2(_ input: TaskInput) {
+    let cmds = input.task10()
+    var x = 1
+    var pixIdx = 0
+    var result = ""
+    
+    func cycleInc() {
+        let pixX = pixIdx % 40
+        let isShown = x - 1 <= pixX && pixX <= x + 1
+        result += isShown ? "#" : "."
+        if pixX == 39 {
+            result += "\n"
+        }
+        pixIdx += 1
+    }
+    
+    for cmd in cmds {
+        switch cmd {
+        case .noop:
+            cycleInc()
+        case .add(let val):
+            cycleInc()
+            cycleInc()
+            x += val
+        }
+    }
+    print("T10_2:\n\(result)")
+}
+
 // MARK: - Main
 
 let inputs = [
@@ -850,8 +932,11 @@ for input in inputs {
 //    task08_1(input)
 //    task08_2(input)
     
-    task09_1(input)
-    task09_2(input)
+//    task09_1(input)
+//    task09_2(input)
+    
+    task10_1(input)
+    task10_2(input)
 
     print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
 }
