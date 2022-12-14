@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day02: Day {
-    var input: String
+public struct Day02: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     enum Figure {
         case rock
@@ -25,7 +30,7 @@ struct Day02: Day {
             }
     }
     
-    func part01() {
+    public func part01() {
         let plan = parse()
         let score = plan
             .map { (a, b) in b.vs(a).rawValue + b.score }
@@ -33,7 +38,7 @@ struct Day02: Day {
         print(score)
     }
     
-    func part02() {
+    public func part02() {
         let plan = parse()
         let score = plan
             .map { (a, b) in (a, b.correctParsing) }

@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day06: Day {
-    var input: String
+public struct Day06: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     func findSignal(_ line: String, len: Int) -> Int {
         let line = Array(line)
@@ -24,11 +29,11 @@ struct Day06: Day {
         return 0
     }
     
-    func part01() {
+    public func part01() {
         print(findSignal(input, len: 4))
     }
     
-    func part02() {
+    public func part02() {
         print(findSignal(input, len: 14))
     }
 }

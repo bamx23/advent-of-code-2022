@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Day {
+public protocol Day {
     init(input: String)
     
     func part01()

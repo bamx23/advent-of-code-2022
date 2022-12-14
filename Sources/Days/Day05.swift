@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day05: Day {
-    var input: String
+public struct Day05: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     struct Move {
         var count: Int
@@ -73,7 +78,7 @@ struct Day05: Day {
         print((1...stacks.count).map { " \($0) " }.joined(separator: " "))
     }
     
-    func part01() {
+    public func part01() {
         let (stacks, moves) = parse()
         let result = moves
             .reduce(stacks) { apply(stacks: $0, move: $1, version: .CrateMover9000) }
@@ -82,7 +87,7 @@ struct Day05: Day {
         print(result)
     }
     
-    func part02() {
+    public func part02() {
         let (stacks, moves) = parse()
         let result = moves
             .reduce(stacks) { apply(stacks: $0, move: $1, version: .CrateMover9001) }

@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day12: Day {
-    var input: String
+public struct Day12: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     func parse() -> [[Int]] {
         input
@@ -68,7 +73,7 @@ struct Day12: Day {
         return Int.max
     }
     
-    func part01() {
+    public func part01() {
         var map = parse()
         let (start, end) = (find(-1, map: map), find(-2, map: map))
         map[start.y][start.x] = 0
@@ -76,7 +81,7 @@ struct Day12: Day {
         print(pathFind(map: map, start: start, end: end))
     }
     
-    func part02() {
+    public func part02() {
         var map = parse()
         let (start, end) = (find(-1, map: map), find(-2, map: map))
         map[start.y][start.x] = 0

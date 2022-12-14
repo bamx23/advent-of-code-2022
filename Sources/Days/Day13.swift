@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day13: Day {
-    var input: String
+public struct Day13: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     enum Node {
         case val(Int)
@@ -78,7 +83,7 @@ struct Day13: Day {
             .map { idx in (nodes[idx * 2], nodes[idx * 2 + 1])}
     }
     
-    func part01() {
+    public func part01() {
         let pairs = parse()
         print(pairs
                 .map { (a, b) in a.comp(b) }
@@ -89,7 +94,7 @@ struct Day13: Day {
         )
     }
     
-    func part02() {
+    public func part02() {
         var nodes = parse().flatMap { (a,b) in [a,b] }
         let (n1, n2) = (
             Node.list([.list([.val(2)])]),

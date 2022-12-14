@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day14: Day {
-    var input: String
+public struct Day14: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     typealias Pos = (x: Int, y: Int)
     typealias Path = [Pos]
@@ -33,7 +38,7 @@ struct Day14: Day {
             }
     }
     
-    func part01() {
+    public func part01() {
         let paths = parse()
         
         let minX = paths.map { $0.map(\.x).min()! }.min()!
@@ -96,7 +101,7 @@ struct Day14: Day {
         print(count)
     }
     
-    func part02() {
+    public func part02() {
         let paths = parse()
         
         let minX = paths.map { $0.map(\.x).min()! }.min()!

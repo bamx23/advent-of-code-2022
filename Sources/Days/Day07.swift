@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day07: Day {
-    var input: String
+public struct Day07: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     class Dir {
         let name: String
@@ -114,7 +119,7 @@ struct Day07: Day {
         rec(dir, prefix: "  ")
     }
     
-    func part01() {
+    public func part01() {
         let root = parse()
 //        printTree(root)
         let sizes = dirSizes(root)
@@ -124,7 +129,7 @@ struct Day07: Day {
         print(result)
     }
     
-    func part02() {
+    public func part02() {
         let root = parse()
         let dirSizes = dirSizes(root)
         let remainSize = 70000000 - dirSizes[""]!

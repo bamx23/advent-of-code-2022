@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day10: Day {
-    var input: String
+public struct Day10: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     enum Cmd {
         case noop
@@ -31,7 +36,7 @@ struct Day10: Day {
             }
     }
     
-    func part01() {
+    public func part01() {
         let cmds = parse()
         var x = 1
         var cycle = 1
@@ -57,7 +62,7 @@ struct Day10: Day {
         print(result)
     }
     
-    func part02() {
+    public func part02() {
         let cmds = parse()
         var x = 1
         var pixIdx = 0

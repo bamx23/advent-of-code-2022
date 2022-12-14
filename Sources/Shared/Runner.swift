@@ -7,7 +7,7 @@
 
 import Foundation
 
-func runDay<D: Day, T: TaskData>(dayType: D.Type, data: T) {
+public func runDay<D: Day, T: TaskData>(dayType: D.Type, data: T) {
     func run(day: D, title: String) {
         let start = Date()
         print("== \(title): ==")

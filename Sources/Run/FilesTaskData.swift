@@ -6,11 +6,16 @@
 //
 
 import Foundation
+import Shared
 
-struct FileTaskData: TaskData {
-    var day: Int
+public struct FileTaskData: TaskData {
+    public let day: Int
     
-    var samples: [String] {
+    public init(day: Int) {
+        self.day = day
+    }
+    
+    public var samples: [String] {
         let prefix = "sample"
         var result = [String]()
         var idx = 1
@@ -25,13 +30,13 @@ struct FileTaskData: TaskData {
         return result
     }
     
-    var task: String? {
+    public var task: String? {
         Self.readInput(prefix: "task", num: String(format: "%02d", day))
     }
 
     static private func readInput(prefix: String, num: String) -> String? {
         let name = "\(prefix)\(num)"
-        guard let url = Bundle.main.url(forResource: name, withExtension: "txt", subdirectory: "input")
+        guard let url = Bundle.module.url(forResource: name, withExtension: "txt", subdirectory: "Input")
         else {
             return nil
         }

@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day03: Day {
-    var input: String
+public struct Day03: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     func parse() -> [([Character], [Character])] {
         input
@@ -31,7 +36,7 @@ struct Day03: Day {
         }
     }
     
-    func part01() {
+    public func part01() {
         let rsks = parse()
         let score = rsks
             .map { (a, b) in Set(a).intersection(Set(b)).first! }
@@ -40,7 +45,7 @@ struct Day03: Day {
         print(score)
     }
     
-    func part02() {
+    public func part02() {
         let rsks = parse()
             .map { $0.0 + $0.1 }
             .map(Set.init)

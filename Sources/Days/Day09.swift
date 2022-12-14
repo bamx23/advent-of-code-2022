@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day09: Day {
-    var input: String
+public struct Day09: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     enum Move: String {
         case up = "U"
@@ -94,7 +99,7 @@ struct Day09: Day {
         }
     }
     
-    func part01() {
+    public func part01() {
         let moves = parse()
         var head: Pos = (x: 0, y: 0)
         var tail = head
@@ -113,7 +118,7 @@ struct Day09: Day {
         print(numVisited)
     }
     
-    func part02() {
+    public func part02() {
         let moves = parse()
         let len = 10
         var rope: [Pos] = .init(repeating: (0, 0), count: len)

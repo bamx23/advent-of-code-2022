@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day01: Day {
-    var input: String
+public struct Day01: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     func parse() -> [[Int]] {
         input
@@ -22,7 +27,7 @@ struct Day01: Day {
             })
     }
     
-    func part01() {
+    public func part01() {
         let elfs = parse()
         let max = elfs
             .map { $0.reduce(0, +) }
@@ -30,7 +35,7 @@ struct Day01: Day {
         print(max)
     }
     
-    func part02() {
+    public func part02() {
         let elfs = parse()
         let max3 = elfs
             .map { $0.reduce(0, +) }

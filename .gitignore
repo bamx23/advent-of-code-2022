@@ -1,6 +1,5 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/swift
-# Edit at https://www.toptal.com/developers/gitignore?templates=swift
+# Created by https://www.toptal.com/developers/gitignore/api/swift,swiftpm
+# Edit at https://www.toptal.com/developers/gitignore?templates=swift,swiftpm
 
 ### Swift ###
 # Xcode
@@ -86,7 +85,12 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# End of https://www.toptal.com/developers/gitignore/api/swift
+### SwiftPM ###
+Packages
+xcuserdata
+*.xcodeproj
 
 
-AdventOfCode2022/input/task*
+# End of https://www.toptal.com/developers/gitignore/api/swift,swiftpm
+
+Sources/Run/Input/task*.txt

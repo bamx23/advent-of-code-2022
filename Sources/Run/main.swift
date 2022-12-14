@@ -5,7 +5,8 @@
 //  Created by Nikolay Valasatau on 1.12.22.
 //
 
-import Foundation
+import Days
+import Shared
 
 //runDay(dayType: Day01.self, data: FileTaskData(day: 1))
 //runDay(dayType: Day02.self, data: FileTaskData(day: 2))

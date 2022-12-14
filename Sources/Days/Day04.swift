@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day04: Day {
-    var input: String
+public struct Day04: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     func parse() -> [(ClosedRange<Int>, ClosedRange<Int>)] {
         input
@@ -25,7 +30,7 @@ struct Day04: Day {
             }
     }
     
-    func part01() {
+    public func part01() {
         let jobs = parse()
         let number = jobs
             .filter { (a, b) in
@@ -37,7 +42,7 @@ struct Day04: Day {
         print(number)
     }
     
-    func part02() {
+    public func part02() {
         let jobs = parse()
         let number = jobs
             .filter { (a, b) in

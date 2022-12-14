@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol TaskData {
+public protocol TaskData {
     var samples: [String] { get }
     var task: String? { get }
 }

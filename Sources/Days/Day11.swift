@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day11: Day {
-    var input: String
+public struct Day11: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     class Monkey {
         var items: [Int]
@@ -66,7 +71,7 @@ struct Day11: Day {
             }
     }
     
-    func part01() {
+    public func part01() {
         let mks = parse()
         var inspects = mks.map { _ in 0 }
         for _ in 0..<20 {
@@ -86,7 +91,7 @@ struct Day11: Day {
         print(inspects.sorted().suffix(2).reduce(1, *))
     }
     
-    func part02() {
+    public func part02() {
         let mks = parse()
         let div = mks.map(\.divider).reduce(1, *)
         var inspects = mks.map { _ in 0 }

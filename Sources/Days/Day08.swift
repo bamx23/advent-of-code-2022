@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Shared
 
-struct Day08: Day {
-    var input: String
+public struct Day08: Day {
+    let input: String
+    
+    public init(input: String) {
+        self.input = input
+    }
     
     func parse() -> [[Int]] {
         input
@@ -105,7 +110,7 @@ struct Day08: Day {
         }
     }
     
-    func part01() {
+    public func part01() {
         let map = parse()
         let visibility = visibilityLevels(map)
 //        printMap(visibility)
@@ -115,7 +120,7 @@ struct Day08: Day {
         print(count)
     }
     
-    func part02() {
+    public func part02() {
         let map = parse()
         let scores = scores(map)
 //        printMap(scores)
