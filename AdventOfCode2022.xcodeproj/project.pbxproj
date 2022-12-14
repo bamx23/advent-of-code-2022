@@ -24,6 +24,9 @@
 		41554F22294A694D00A06396 /* Day09.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41554F21294A694D00A06396 /* Day09.swift */; };
 		41554F24294A6A2700A06396 /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41554F23294A6A2700A06396 /* Day10.swift */; };
 		41554F26294A6AC400A06396 /* Day14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41554F25294A6AC400A06396 /* Day14.swift */; };
+		41554F28294A6CED00A06396 /* Day11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41554F27294A6CED00A06396 /* Day11.swift */; };
+		41554F2A294A6CF600A06396 /* Day12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41554F29294A6CF600A06396 /* Day12.swift */; };
+		41554F2C294A6CFC00A06396 /* Day13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41554F2B294A6CFC00A06396 /* Day13.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +61,9 @@
 		41554F21294A694D00A06396 /* Day09.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day09.swift; sourceTree = "<group>"; };
 		41554F23294A6A2700A06396 /* Day10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
 		41554F25294A6AC400A06396 /* Day14.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day14.swift; sourceTree = "<group>"; };
+		41554F27294A6CED00A06396 /* Day11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day11.swift; sourceTree = "<group>"; };
+		41554F29294A6CF600A06396 /* Day12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day12.swift; sourceTree = "<group>"; };
+		41554F2B294A6CFC00A06396 /* Day13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day13.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,9 @@
 				41554F1F294A68B600A06396 /* Day08.swift */,
 				41554F21294A694D00A06396 /* Day09.swift */,
 				41554F23294A6A2700A06396 /* Day10.swift */,
+				41554F27294A6CED00A06396 /* Day11.swift */,
+				41554F29294A6CF600A06396 /* Day12.swift */,
+				41554F2B294A6CFC00A06396 /* Day13.swift */,
 				41554F25294A6AC400A06396 /* Day14.swift */,
 			);
 			path = AdventOfCode2022;
@@ -182,10 +191,13 @@
 				41554F14294A5EDC00A06396 /* Day02.swift in Sources */,
 				41554F0E294A5B2100A06396 /* Runner.swift in Sources */,
 				41554F10294A5BBE00A06396 /* FilesTaskData.swift in Sources */,
+				41554F2C294A6CFC00A06396 /* Day13.swift in Sources */,
+				41554F2A294A6CF600A06396 /* Day12.swift in Sources */,
 				41554F24294A6A2700A06396 /* Day10.swift in Sources */,
 				4108CBEA2757556B002D7E57 /* main.swift in Sources */,
 				41554F1A294A659600A06396 /* Day05.swift in Sources */,
 				41554F0C294A5B0F00A06396 /* Day.swift in Sources */,
+				41554F28294A6CED00A06396 /* Day11.swift in Sources */,
 				41554F26294A6AC400A06396 /* Day14.swift in Sources */,
 				41554F1C294A665D00A06396 /* Day06.swift in Sources */,
 				41554F12294A5DEB00A06396 /* Day01.swift in Sources */,

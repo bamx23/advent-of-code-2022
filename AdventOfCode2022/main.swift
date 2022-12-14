@@ -17,4 +17,7 @@ import Foundation
 //runDay(dayType: Day08.self, data: FileTaskData(day: 8))
 //runDay(dayType: Day09.self, data: FileTaskData(day: 9))
 //runDay(dayType: Day10.self, data: FileTaskData(day: 10))
+//runDay(dayType: Day11.self, data: FileTaskData(day: 11))
+//runDay(dayType: Day12.self, data: FileTaskData(day: 12))
+//runDay(dayType: Day13.self, data: FileTaskData(day: 13))
 runDay(dayType: Day14.self, data: FileTaskData(day: 14))
