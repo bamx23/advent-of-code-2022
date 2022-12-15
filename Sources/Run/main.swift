@@ -21,4 +21,5 @@ import Shared
 //runDay(dayType: Day11.self, data: FileTaskData(day: 11))
 //runDay(dayType: Day12.self, data: FileTaskData(day: 12))
 //runDay(dayType: Day13.self, data: FileTaskData(day: 13))
-runDay(dayType: Day14.self, data: FileTaskData(day: 14))
+//runDay(dayType: Day14.self, data: FileTaskData(day: 14))
+runDay(dayType: Day15.self, data: FileTaskData(day: 15))
