@@ -15,8 +15,6 @@ public struct Day15: Day {
         self.input = input
     }
     
-    typealias Pos = (x: Int, y: Int)
-    
     func parse() -> [(Pos, Pos)] {
         input
             .split(separator: "\n")
@@ -39,51 +37,68 @@ public struct Day15: Day {
     public func part01() {
         let measures = parse()
         for y in [10, 2000000] {
-            let ranges = measures.compactMap { (sensor, beacon) -> ClosedRange<Int>? in
-                let dist = abs(sensor.x - beacon.x) + abs(sensor.y - beacon.y)
-                let yDist = abs(sensor.y - y)
-                let xDist = dist - yDist
-                guard xDist >= 0 else { return nil }
-                return (sensor.x - xDist)...(sensor.x + xDist)
-            }
-            var xPoses = Set<Int>()
+            let ranges = measures
+                .compactMap { (sensor, beacon) -> ClosedRange<Int>? in
+                    let dist = abs(sensor.x - beacon.x) + abs(sensor.y - beacon.y)
+                    let yDist = abs(sensor.y - y)
+                    let xDist = dist - yDist
+                    guard xDist >= 0 else { return nil }
+                    return (sensor.x - xDist)...(sensor.x + xDist)
+                }
+                .sorted(by: { (a,b) in a.lowerBound < b.lowerBound })
+            if ranges.isEmpty { return }
+            
+            var count = 0
+            var x = Int.min
             for range in ranges {
-                xPoses.formUnion(range)
+                if range.upperBound < x { continue }
+                if range.lowerBound > x {
+                    x = range.lowerBound
+                }
+                count += range.upperBound - x + 1
+                x = range.upperBound + 1
             }
-            for (_, beacon) in measures {
+            
+            for beacon in Set(measures.map(\.1)) {
                 if beacon.y == y {
-                    xPoses.remove(beacon.x)
+                    count -= 1
                 }
             }
-//            if xPoses.count < 30 {
-//                print(xPoses.sorted())
-//            }
-            print("y=\(y): \(xPoses.count)")
+            
+            print("y=\(y): \(count)")
         }
     }
     
     public func part02() {
         let measures = parse()
         let len = measures.count <= 15 ? 20 : 4000000
-        for y in 0...len {
-            var x = 0
-            while x <= len {
-                var found = false
-                for (sensor, beacon) in measures {
-                    let distEx = abs(sensor.x - beacon.x) + abs(sensor.y - beacon.y)
-                    let distNew = abs(sensor.x - x) + abs(sensor.y - y)
-                    if distNew <= distEx {
-                        found = true
-                        let yDist = abs(sensor.y - y)
-                        let xDist = distEx - yDist
-                        x = sensor.x + xDist + 1
-                        break
-                    }
+        
+        func isValid(x: Int, y: Int) -> Bool {
+            guard 0 <= x && x <= len && 0 <= y && y <= len else { return false }
+            for (sensor, beacon) in measures {
+                let distEx = abs(sensor.x - beacon.x) + abs(sensor.y - beacon.y)
+                let distNew = abs(sensor.x - x) + abs(sensor.y - y)
+                if distNew <= distEx {
+                    return false
                 }
-                if !found {
-                    print("x=\(x), y=\(y), freq=\(x * 4000000 + y)")
-                    return
-                }
+            }
+            print("x=\(x), y=\(y), freq=\(x * 4000000 + y)")
+            return true
+        }
+        
+        for (sensor, beacon) in measures {
+            let dist = abs(sensor.x - beacon.x) + abs(sensor.y - beacon.y)
+            for k in 0...dist {
+                if isValid(x: sensor.x - dist - 1 + k, y: sensor.y - k) { return }
+            }
+            for k in 0...dist {
+                if isValid(x: sensor.x + k, y: sensor.y - dist - 1 + k) { return }
+            }
+            for k in 0...dist {
+                if isValid(x: sensor.x + dist + 1 - k, y: sensor.y + k) { return }
+            }
+            for k in 0...dist {
+                if isValid(x: sensor.x - k, y: sensor.y + dist + 1 - k) { return }
             }
         }
     }
