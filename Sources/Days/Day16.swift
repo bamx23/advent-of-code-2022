@@ -1,6 +1,6 @@
 //
 //  Day16.swift
-//  
+//  AdventOfCode2022
 //
 //  Created by Nikolay Volosatov on 15/12/2022.
 //
@@ -57,7 +57,7 @@ public struct Day16: Day {
         return valves.map(\.0)
     }
     
-    func run(valves: [Valve], maxOpen: Int, maxFlow: Int, state: State, cache: inout [State: Int], currentMax: inout Int) -> Int {
+    func run(valves: [Valve], maxOpen: Int, maxFlow: Int, fastEdges: FastEdges, state: State, cache: inout [State: Int], currentMax: inout Int) -> Int {
         guard currentMax < state.totalFlow + state.timeLeft * maxFlow else {
             return 0
         }
@@ -75,30 +75,23 @@ public struct Day16: Day {
         let valve = valves[state.currentValveIdx]
         
         var result = 0
-        var newState = state
-        newState.totalFlow += state.currentFlow
-        newState.timeLeft -= 1
         
-        for otherIdx in valve.otherIdxs {
-            newState.currentValveIdx = otherIdx
+        for (idx, steps) in fastEdges[state.currentValveIdx] {
+            guard steps <= state.timeLeft else { continue }
+            guard !state.openValves.contains(idx) else { continue }
+            
+            var newState = state
+            newState.currentValveIdx = idx
+            newState.timeLeft -= steps
+            newState.totalFlow += state.currentFlow * steps
+            newState.currentFlow += valves[idx].flow
+            newState.openValves.insert(idx)
+            
             result = max(result, run(
                 valves: valves,
                 maxOpen: maxOpen,
                 maxFlow: maxFlow,
-                state: newState,
-                cache: &cache,
-                currentMax: &currentMax
-            ))
-        }
-        
-        newState.currentValveIdx = state.currentValveIdx
-        if valve.flow != 0 && !state.openValves.contains(valve.idx) {
-            newState.openValves.insert(valve.idx)
-            newState.currentFlow += valve.flow
-            result = max(result, run(
-                valves: valves,
-                maxOpen: maxOpen,
-                maxFlow: maxFlow,
+                fastEdges: fastEdges,
                 state: newState,
                 cache: &cache,
                 currentMax: &currentMax
@@ -249,6 +242,7 @@ public struct Day16: Day {
             valves: valves,
             maxOpen: valves.filter { $0.flow != 0 }.count,
             maxFlow: valves.map(\.flow).reduce(0, +),
+            fastEdges: shrink(valves: valves),
             state: .init(
                 currentValveIdx: valves.firstIndex(where: { $0.name == "AA" })!,
                 timeLeft: 30,
