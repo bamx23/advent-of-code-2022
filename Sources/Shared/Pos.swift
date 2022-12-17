@@ -16,3 +16,11 @@ public struct Pos: Hashable {
         self.y = y
     }
 }
+
+public func +(lhs: Pos, rhs: Pos) -> Pos {
+    .init(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+}
+
+public func -(lhs: Pos, rhs: Pos) -> Pos {
+    .init(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+}
