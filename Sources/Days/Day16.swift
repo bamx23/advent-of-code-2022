@@ -72,8 +72,6 @@ public struct Day16: Day {
             return result
         }
         
-        let valve = valves[state.currentValveIdx]
-        
         var result = 0
         
         for (idx, steps) in fastEdges[state.currentValveIdx] {
