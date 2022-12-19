@@ -77,7 +77,7 @@ public struct Day17: Day {
         print("")
     }
     
-    public func part01() {
+    public func part01() -> String {
         let winds = parse()
         
         var topHeight = -1
@@ -111,7 +111,7 @@ public struct Day17: Day {
             apply(figure: figure, pos: figurePos, map: &map)
             topHeight = max(topHeight, figurePos.y + figure.height)
         }
-        print(topHeight + 1)
+        return "\(topHeight + 1)"
     }
     
     struct State: Hashable {
@@ -130,7 +130,7 @@ public struct Day17: Day {
         }
     }
     
-    public func part02() {
+    public func part02() -> String {
         let winds = parse()
         
         var topHeight = -1
@@ -190,7 +190,7 @@ public struct Day17: Day {
             }
             day += 1
         }
-        print(topHeight + 1)
+        return "\(topHeight + 1)"
     }
 }
 

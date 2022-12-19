@@ -98,12 +98,12 @@ public struct Day18: Day {
             .map(\.key)
     }
     
-    public func part01() {
+    public func part01() -> String {
         let drops = parse()
-        print(uncoveredSides(drops).count)
+        return "\(uncoveredSides(drops).count)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let drops = Set(parse())
         let sides = uncoveredSides(drops)
         var externalSides = Set(sides)
@@ -145,6 +145,6 @@ public struct Day18: Day {
             }
         }
         
-        print(externalSides.count)
+        return "\(externalSides.count)"
     }
 }

@@ -78,21 +78,21 @@ public struct Day05: Day {
         print((1...stacks.count).map { " \($0) " }.joined(separator: " "))
     }
     
-    public func part01() {
+    public func part01() -> String {
         let (stacks, moves) = parse()
         let result = moves
             .reduce(stacks) { apply(stacks: $0, move: $1, version: .CrateMover9000) }
             .compactMap { $0.last }
 
-        print(result)
+        return "\(String(result))"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let (stacks, moves) = parse()
         let result = moves
             .reduce(stacks) { apply(stacks: $0, move: $1, version: .CrateMover9001) }
             .compactMap { $0.last }
 
-        print(result)
+        return "\(String(result))"
     }
 }

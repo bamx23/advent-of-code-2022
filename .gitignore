@@ -93,4 +93,4 @@ xcuserdata
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,swiftpm
 
-Sources/Run/Input/task*.txt
+Sources/Input/files/task*.txt

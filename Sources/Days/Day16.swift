@@ -232,7 +232,7 @@ public struct Day16: Day {
         return result
     }
     
-    public func part01() {
+    public func part01() -> String {
         let valves = parse()
         var cache = [State: Int]()
         var currentMax = 0
@@ -251,10 +251,10 @@ public struct Day16: Day {
             cache: &cache,
             currentMax: &currentMax
         )
-        print(maxFlow)
+        return "\(maxFlow)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let valves = parse()
         var cache = [StateWithEl: Int]()
         var currentMax = 0
@@ -277,6 +277,6 @@ public struct Day16: Day {
             cache: &cache,
             currentMax: &currentMax
         )
-        print(maxFlow)
+        return "\(maxFlow)"
     }
 }

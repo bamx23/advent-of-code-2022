@@ -119,17 +119,17 @@ public struct Day07: Day {
         rec(dir, prefix: "  ")
     }
     
-    public func part01() {
+    public func part01() -> String {
         let root = parse()
 //        printTree(root)
         let sizes = dirSizes(root)
         let result = sizes.values
             .filter { $0 < 100000 }
             .reduce(0, +)
-        print(result)
+        return "\(result)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let root = parse()
         let dirSizes = dirSizes(root)
         let remainSize = 70000000 - dirSizes[""]!
@@ -137,7 +137,7 @@ public struct Day07: Day {
         let removing = dirSizes.values
             .sorted()
             .first(where: { $0 >= toRemove })!
-        print(removing)
+        return "\(removing)"
     }
 }
 

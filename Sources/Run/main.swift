@@ -7,6 +7,7 @@
 
 import Days
 import Shared
+import Input
 
 //runDay(dayType: Day01.self, data: FileTaskData(day: 1))
 //runDay(dayType: Day02.self, data: FileTaskData(day: 2))

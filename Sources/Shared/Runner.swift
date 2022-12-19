@@ -12,9 +12,9 @@ public func runDay<D: Day, T: TaskData>(dayType: D.Type, data: T) {
         let start = Date()
         print("== \(title): ==")
         print("Part 1:")
-        day.part01()
+        print(day.part01())
         print("Part 2:")
-        day.part02()
+        print(day.part02())
         print("Time: \(String(format: "%0.4f", -start.timeIntervalSinceNow))")
     }
     

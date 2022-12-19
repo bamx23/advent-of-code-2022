@@ -73,15 +73,15 @@ public struct Day12: Day {
         return Int.max
     }
     
-    public func part01() {
+    public func part01() -> String {
         var map = parse()
         let (start, end) = (find(-1, map: map), find(-2, map: map))
         map[start.y][start.x] = 0
         map[end.y][end.x] = 25
-        print(pathFind(map: map, start: start, end: end))
+        return "\(pathFind(map: map, start: start, end: end))"
     }
     
-    public func part02() {
+    public func part02() -> String {
         var map = parse()
         let (start, end) = (find(-1, map: map), find(-2, map: map))
         map[start.y][start.x] = 0
@@ -94,6 +94,6 @@ public struct Day12: Day {
                 }
             }
         }
-        print(minLen)
+        return "\(minLen)"
     }
 }

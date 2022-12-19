@@ -29,11 +29,11 @@ public struct Day06: Day {
         return 0
     }
     
-    public func part01() {
-        print(findSignal(input, len: 4))
+    public func part01() -> String {
+        return "\(findSignal(input, len: 4))"
     }
     
-    public func part02() {
-        print(findSignal(input, len: 14))
+    public func part02() -> String {
+        return "\(findSignal(input, len: 14))"
     }
 }

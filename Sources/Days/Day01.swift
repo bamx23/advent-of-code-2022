@@ -27,21 +27,21 @@ public struct Day01: Day {
             })
     }
     
-    public func part01() {
+    public func part01() -> String {
         let elfs = parse()
         let max = elfs
             .map { $0.reduce(0, +) }
             .max()!
-        print(max)
+        return "\(max)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let elfs = parse()
         let max3 = elfs
             .map { $0.reduce(0, +) }
             .sorted()
             .suffix(3)
             .reduce(0, +)
-        print(max3)
+        return "\(max3)"
     }
 }

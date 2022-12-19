@@ -36,16 +36,16 @@ public struct Day03: Day {
         }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let rsks = parse()
         let score = rsks
             .map { (a, b) in Set(a).intersection(Set(b)).first! }
             .map(priority)
             .reduce(0, +)
-        print(score)
+        return "\(score)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let rsks = parse()
             .map { $0.0 + $0.1 }
             .map(Set.init)
@@ -60,6 +60,6 @@ public struct Day03: Day {
             }
             .map(priority)
             .reduce(0, +)
-        print(score)
+        return "\(score)"
     }
 }

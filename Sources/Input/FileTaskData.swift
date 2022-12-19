@@ -36,7 +36,7 @@ public struct FileTaskData: TaskData {
 
     static private func readInput(prefix: String, num: String) -> String? {
         let name = "\(prefix)\(num)"
-        guard let url = Bundle.module.url(forResource: name, withExtension: "txt", subdirectory: "Input")
+        guard let url = Bundle.module.url(forResource: name, withExtension: "txt", subdirectory: "files")
         else {
             return nil
         }

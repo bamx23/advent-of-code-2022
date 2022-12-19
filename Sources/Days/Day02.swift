@@ -30,21 +30,21 @@ public struct Day02: Day {
             }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let plan = parse()
         let score = plan
             .map { (a, b) in b.vs(a).rawValue + b.score }
             .reduce(0, +)
-        print(score)
+        return "\(score)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let plan = parse()
         let score = plan
             .map { (a, b) in (a, b.correctParsing) }
             .map { (a, b) in b.rawValue + a.how(b).score }
             .reduce(0, +)
-        print(score)
+        return "\(score)"
     }
 }
 

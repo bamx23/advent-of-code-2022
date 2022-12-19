@@ -99,7 +99,7 @@ public struct Day09: Day {
         }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let moves = parse()
         var head: Pos = (x: 0, y: 0)
         var tail = head
@@ -115,10 +115,10 @@ public struct Day09: Day {
             }
         }
         let numVisited = visited.values.map(\.count).reduce(0, +)
-        print(numVisited)
+        return "\(numVisited)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let moves = parse()
         let len = 10
         var rope: [Pos] = .init(repeating: (0, 0), count: len)
@@ -138,7 +138,7 @@ public struct Day09: Day {
             }
         }
         let numVisited = visited.values.map(\.count).reduce(0, +)
-        print(numVisited)
+        return "\(numVisited)"
     }
 }
 

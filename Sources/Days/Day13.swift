@@ -83,18 +83,18 @@ public struct Day13: Day {
             .map { idx in (nodes[idx * 2], nodes[idx * 2 + 1])}
     }
     
-    public func part01() {
+    public func part01() -> String {
         let pairs = parse()
-        print(pairs
-                .map { (a, b) in a.comp(b) }
-                .enumerated()
-                .filter { (_, v) in v <= 0 }
-                .map { $0.offset + 1 }
-                .reduce(0, +)
-        )
+        let result = pairs
+            .map { (a, b) in a.comp(b) }
+            .enumerated()
+            .filter { (_, v) in v <= 0 }
+            .map { $0.offset + 1 }
+            .reduce(0, +)
+        return "\(result)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         var nodes = parse().flatMap { (a,b) in [a,b] }
         let (n1, n2) = (
             Node.list([.list([.val(2)])]),
@@ -104,6 +104,6 @@ public struct Day13: Day {
         nodes.sort(by: { (a,b) in a.comp(b) < 0 })
         let p1 = nodes.firstIndex(where: { $0.comp(n1) == 0 })! + 1
         let p2 = nodes.firstIndex(where: { $0.comp(n2) == 0 })! + 1
-        print(p1 * p2)
+        return "\(p1 * p2)"
     }
 }

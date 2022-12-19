@@ -36,7 +36,7 @@ public struct Day10: Day {
             }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let cmds = parse()
         var x = 1
         var cycle = 1
@@ -59,10 +59,10 @@ public struct Day10: Day {
                 x += val
             }
         }
-        print(result)
+        return "\(result)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let cmds = parse()
         var x = 1
         var pixIdx = 0
@@ -88,6 +88,6 @@ public struct Day10: Day {
                 x += val
             }
         }
-        print(result)
+        return result.trimmingCharacters(in: .newlines)
     }
 }

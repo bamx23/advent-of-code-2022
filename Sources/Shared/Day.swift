@@ -10,6 +10,6 @@ import Foundation
 public protocol Day {
     init(input: String)
     
-    func part01()
-    func part02()
+    func part01() -> String
+    func part02() -> String
 }

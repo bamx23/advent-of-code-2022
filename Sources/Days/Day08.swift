@@ -110,23 +110,23 @@ public struct Day08: Day {
         }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let map = parse()
         let visibility = visibilityLevels(map)
 //        printMap(visibility)
         let count = visibility
             .map { l in l.filter { $0 > 0 }.count }
             .reduce(0, +)
-        print(count)
+        return "\(count)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let map = parse()
         let scores = scores(map)
 //        printMap(scores)
         let best = scores
             .map { $0.max()! }
             .max()!
-        print(best)
+        return "\(best)"
     }
 }

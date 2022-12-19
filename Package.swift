@@ -16,9 +16,24 @@ let package = Package(
             dependencies: [
                 "Days",
                 "Shared",
+                "Input",
+            ]
+        ),
+        .testTarget(
+            name: "Tests",
+            dependencies: [
+                "Days",
+                "Shared",
+                "Input",
+            ]
+        ),
+        .target(
+            name: "Input",
+            dependencies: [
+                "Shared",
             ],
             resources: [
-                .copy("Input"),
+                .copy("files"),
             ]
         ),
         .target(

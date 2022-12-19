@@ -30,7 +30,7 @@ public struct Day04: Day {
             }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let jobs = parse()
         let number = jobs
             .filter { (a, b) in
@@ -39,10 +39,10 @@ public struct Day04: Day {
                 (b.contains(a.lowerBound) && b.contains(a.upperBound))
             }
             .count
-        print(number)
+        return "\(number)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let jobs = parse()
         let number = jobs
             .filter { (a, b) in
@@ -51,6 +51,6 @@ public struct Day04: Day {
                 b.contains(a.lowerBound) || b.contains(a.upperBound)
             }
             .count
-        print(number)
+        return "\(number)"
     }
 }

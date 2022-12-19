@@ -38,7 +38,7 @@ public struct Day14: Day {
             }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let paths = parse()
         
         let minX = paths.map { $0.map(\.x).min()! }.min()!
@@ -98,10 +98,10 @@ public struct Day14: Day {
         let count = map
             .map { line in line.filter { $0 == .sand }.count }
             .reduce(0, +)
-        print(count)
+        return "\(count)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let paths = parse()
         
         let minX = paths.map { $0.map(\.x).min()! }.min()!
@@ -160,6 +160,6 @@ public struct Day14: Day {
         let count = map
             .map { line in line.filter { $0 == .sand }.count }
             .reduce(0, +)
-        print(count)
+        return "\(count)"
     }
 }

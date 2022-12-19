@@ -177,7 +177,7 @@ public struct Day19: Day {
         return result
     }
     
-    public func part01() {
+    public func part01() -> String {
         let bps = parse()
         let score = bps
             .enumerated()
@@ -194,10 +194,10 @@ public struct Day19: Day {
                 return (idx + 1) * geodes
             }
             .reduce(0, +)
-        print(score)
+        return "\(score)"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let bps = parse()
         let score = bps
             .prefix(3)
@@ -214,6 +214,6 @@ public struct Day19: Day {
                 return geodes
             }
             .reduce(1, *)
-        print(score)
+        return "\(score)"
     }
 }

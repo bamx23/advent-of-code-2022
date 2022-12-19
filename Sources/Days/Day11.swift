@@ -71,7 +71,7 @@ public struct Day11: Day {
             }
     }
     
-    public func part01() {
+    public func part01() -> String {
         let mks = parse()
         var inspects = mks.map { _ in 0 }
         for _ in 0..<20 {
@@ -88,10 +88,10 @@ public struct Day11: Day {
                 m.items.removeAll()
             }
         }
-        print(inspects.sorted().suffix(2).reduce(1, *))
+        return "\(inspects.sorted().suffix(2).reduce(1, *))"
     }
     
-    public func part02() {
+    public func part02() -> String {
         let mks = parse()
         let div = mks.map(\.divider).reduce(1, *)
         var inspects = mks.map { _ in 0 }
@@ -109,6 +109,6 @@ public struct Day11: Day {
                 m.items.removeAll()
             }
         }
-        print(inspects.sorted().suffix(2).reduce(1, *))
+        return "\(inspects.sorted().suffix(2).reduce(1, *))"
     }
 }
