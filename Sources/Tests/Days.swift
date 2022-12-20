@@ -120,5 +120,9 @@ final class Days: XCTestCase {
     func testDay19() throws {
         testDay(dayType: Day19.self, data: TestData(day: 19))
     }
+    
+    func testDay20() throws {
+        testDay(dayType: Day20.self, data: TestData(day: 20))
+    }
 
 }
