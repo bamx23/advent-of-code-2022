@@ -42,20 +42,38 @@ public struct Day20: Day {
         return nodes
     }
     
-    func moveFwd(_ node: Node) {
-        let next = node.next!
-        node.next = next.next
-        next.next.prev = node
+    func shift(_ node: Node, steps: Int) {
+        guard steps != 0 else { return }
         
-        next.prev = node.prev
-        node.prev.next = next
+        var after = node.prev!
         
-        node.prev = next
-        next.next = node
+        // Remove
+        (node.next.prev, node.prev.next) = (node.prev, node.next)
+        
+        if node.val > 0 {
+            for _ in 0..<steps {
+                after = after.next
+            }
+        } else {
+            for _ in 0..<(-steps) {
+                after = after.prev
+            }
+        }
+        
+        // Insert after
+        (node.prev, node.next, after.next, after.next.prev) = (after, after.next, node, node)
     }
     
-    func moveBck(_ node: Node) {
-        moveFwd(node.prev)
+    func coordinates(_ nodes: [Node]) -> [Int] {
+        var node = nodes.first(where: { $0.val == 0 })!
+        var nums = [Int]()
+        for _ in 0..<3 {
+            for _ in 0..<1000 {
+                node = node.next
+            }
+            nums.append(node.val)
+        }
+        return nums
     }
     
     func printSample(_ nodes: [Node], start: Int) {
@@ -73,28 +91,11 @@ public struct Day20: Day {
         let data = parse()
         let nodes = makeList(data)
         for node in nodes {
-            if node.val > 0 {
-                for _ in 0..<node.val {
-                    moveFwd(node)
-                }
-            } else if node.val < 0 {
-                for _ in 0..<(-node.val) {
-                    moveBck(node)
-                }
-            }
+            shift(node, steps: node.val)
         }
         
 //        printSample(nodes, start: 1)
-        
-        var node = nodes.first(where: { $0.val == 0 })!
-        var nums = [Int]()
-        for _ in 0..<3 {
-            for _ in 0..<1000 {
-                node = node.next
-            }
-            nums.append(node.val)
-        }
-        return "\(nums.reduce(0, +))"
+        return "\(coordinates(nodes).reduce(0, +))"
     }
     
     public func part02() -> String {
@@ -103,28 +104,11 @@ public struct Day20: Day {
         let nodes = makeList(data.map { $0 * key })
         for _ in 0..<10 {
             for node in nodes {
-                if node.val > 0 {
-                    for _ in 0..<(node.val % (nodes.count - 1)) {
-                        moveFwd(node)
-                    }
-                } else if node.val < 0 {
-                    for _ in 0..<((-node.val) % (nodes.count - 1)) {
-                        moveBck(node)
-                    }
-                }
+                shift(node, steps: node.val % (nodes.count - 1))
             }
         }
         
 //        printSample(nodes, start: 0)
-        
-        var node = nodes.first(where: { $0.val == 0 })!
-        var nums = [Int]()
-        for _ in 0..<3 {
-            for _ in 0..<1000 {
-                node = node.next
-            }
-            nums.append(node.val)
-        }
-        return "\(nums.reduce(0, +))"
+        return "\(coordinates(nodes).reduce(0, +))"
     }
 }
