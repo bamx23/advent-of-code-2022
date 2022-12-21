@@ -7,6 +7,7 @@
 
 import Foundation
 import Shared
+import Collections
 
 public struct Day19: Day {
     let input: String
@@ -47,7 +48,7 @@ public struct Day19: Day {
             }
     }
     
-    struct State: Hashable {
+    struct State: Hashable, Comparable {
         var ore: Int
         var clay: Int
         var obsidian: Int
@@ -70,6 +71,10 @@ public struct Day19: Day {
             self.obsidianBots = 0
             self.geodeBots = 0
             self.timeLeft = timeLeft
+        }
+        
+        static func < (lhs: Day19.State, rhs: Day19.State) -> Bool {
+            (lhs.geode + lhs.geodeBots * lhs.timeLeft) > (rhs.geode + rhs.geodeBots * rhs.timeLeft)
         }
     }
     
@@ -131,50 +136,57 @@ public struct Day19: Day {
         return (state.geode, firstStates[3], firstStates[2], firstStates[1], firstStates[0])
     }
     
-    func run(bp: Blueprint, state: State, cache: inout [State: Int], curMax: inout Int) -> Int {
+    func run(bp: Blueprint, state: State, cache: inout Set<State>, curMax: inout Int) -> [State] {
         if state.geode + state.timeLeft * (2 * state.geodeBots + state.timeLeft - 1) / 2 < curMax {
-            return 0
+            return []
         }
-        if let result = cache[state] { return result }
+        if cache.contains(state) { return [] }
+        cache.insert(state)
         
         let opt = runOpt(bp: bp, state: state)
         
-        var result = opt.result
-        curMax = max(curMax, result)
+        var result = [State]()
+        curMax = max(curMax, opt.result)
 
-        if var geodeBot = opt.geode {
-            harvest(&geodeBot)
-            geodeBot.geodeBots += 1
-            geodeBot.ore -= bp.geodeBot.0
-            geodeBot.obsidian -= bp.geodeBot.1
-            
-            result = max(result, run(bp: bp, state: geodeBot, cache: &cache, curMax: &curMax))
+        if var geodeState = opt.geode {
+            harvest(&geodeState)
+            geodeState.geodeBots += 1
+            geodeState.ore -= bp.geodeBot.0
+            geodeState.obsidian -= bp.geodeBot.1
+            result.append(geodeState)
         }
         if var obsidianState = opt.obsidian {
             harvest(&obsidianState)
             obsidianState.obsidianBots += 1
             obsidianState.ore -= bp.obsidianBot.0
             obsidianState.clay -= bp.obsidianBot.1
-            
-            result = max(result, run(bp: bp, state: obsidianState, cache: &cache, curMax: &curMax))
+            result.append(obsidianState)
         }
         if var clayState = opt.clay {
             harvest(&clayState)
             clayState.clayBots += 1
             clayState.ore -= bp.clayBot
-            
-            result = max(result, run(bp: bp, state: clayState, cache: &cache, curMax: &curMax))
+            result.append(clayState)
         }
         if var oreState = opt.ore {
             harvest(&oreState)
             oreState.oreBots += 1
             oreState.ore -= bp.oreBot
-            
-            result = max(result, run(bp: bp, state: oreState, cache: &cache, curMax: &curMax))
+            result.append(oreState)
         }
-        
-        cache[state] = result
+
         return result
+    }
+    
+    func dijkstra(bp: Blueprint, initialState: State) -> Int {
+        var currentMax = Int.min
+        var cache = Set<State>()
+        var heap = Heap<State>()
+        heap.insert(initialState)
+        while let state = heap.popMin() {
+            heap.insert(contentsOf: run(bp: bp, state: state, cache: &cache, curMax: &currentMax))
+        }
+        return currentMax
     }
     
     public func part01() -> String {
@@ -182,13 +194,9 @@ public struct Day19: Day {
         let score = bps
             .enumerated()
             .map { (idx, bp) in
-                var cache: [State: Int] = [:]
-                var curMax = Int.min
-                let geodes = run(
+                let geodes = dijkstra(
                     bp: bp,
-                    state: .init(oreBots: 1, timeLeft: 24),
-                    cache: &cache,
-                    curMax: &curMax
+                    initialState: .init(oreBots: 1, timeLeft: 24)
                 )
 //                print("\(idx + 1): \(geodes)")
                 return (idx + 1) * geodes
@@ -202,13 +210,9 @@ public struct Day19: Day {
         let score = bps
             .prefix(3)
             .map { bp in
-                var cache: [State: Int] = [:]
-                var curMax = Int.min
-                let geodes = run(
+                let geodes = dijkstra(
                     bp: bp,
-                    state: .init(oreBots: 1, timeLeft: 32),
-                    cache: &cache,
-                    curMax: &curMax
+                    initialState: .init(oreBots: 1, timeLeft: 32)
                 )
 //                print(geodes)
                 return geodes

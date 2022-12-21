@@ -7,6 +7,7 @@
 
 import Foundation
 import Shared
+import Collections
 
 public struct Day16: Day {
     let input: String
@@ -100,7 +101,7 @@ public struct Day16: Day {
         return result
     }
     
-    struct StateWithEl: Hashable {
+    struct StateWithEl: Hashable, Comparable {
         var myTargetIdx: Int
         var myTargetLeft: Int
         
@@ -120,22 +121,25 @@ public struct Day16: Day {
         mutating func toggle(_ idx: Int) {
             openValves ^= (1 << idx)
         }
+        
+        static func < (lhs: Day16.StateWithEl, rhs: Day16.StateWithEl) -> Bool {
+            (lhs.totalFlow + lhs.currentFlow * lhs.timeLeft) > (rhs.totalFlow + rhs.currentFlow * lhs.timeLeft)
+        }
     }
     
     typealias FastEdge = (idx: Int, steps: Int)
     typealias FastEdges = [[FastEdge]]
     
-    func runWithEl(valves: [Valve], maxOpen: Int, maxFlow: Int, fastEdges: FastEdges, state: StateWithEl, cache: inout [StateWithEl: Int], currentMax: inout Int) -> Int {
+    func runWithEl(valves: [Valve], maxOpen: Int, maxFlow: Int, fastEdges: FastEdges, state: StateWithEl, currentMax: inout Int) -> [StateWithEl] {
         guard currentMax < state.totalFlow + state.timeLeft * maxFlow else {
-            return 0
+            return []
         }
-        if let result = cache[state] { return result }
         guard state.timeLeft > 0 else {
             if currentMax < state.totalFlow {
                 currentMax = state.totalFlow
 //                print(currentMax)
             }
-            return state.totalFlow
+            return []
         }
         guard state.openCount < maxOpen else {
             let result = state.totalFlow + state.timeLeft * state.currentFlow
@@ -143,10 +147,10 @@ public struct Day16: Day {
                 currentMax = result
 //                print(currentMax)
             }
-            return result
+            return []
         }
         
-        var result = 0
+        var result: [StateWithEl] = []
         
         var myMoves = state.myTargetLeft == 0
             ? fastEdges[state.myTargetIdx]
@@ -191,19 +195,10 @@ public struct Day16: Day {
                     newState.currentFlow += valves[elMove.idx].flow
                 }
                 
-                result = max(result, runWithEl(
-                    valves: valves,
-                    maxOpen: maxOpen,
-                    maxFlow: maxFlow,
-                    fastEdges: fastEdges,
-                    state: newState,
-                    cache: &cache,
-                    currentMax: &currentMax
-                ))
+                result.append(newState)
             }
         }
         
-        cache[state] = result
         return result
     }
     
@@ -232,6 +227,23 @@ public struct Day16: Day {
         return result
     }
     
+    func dijkstra(valves: [Valve], maxOpen: Int, maxFlow: Int, fastEdges: FastEdges, initialState: StateWithEl) -> Int {
+        var currentMax = 0
+        var heap = Heap<StateWithEl>()
+        heap.insert(initialState)
+        while let state = heap.popMin() {
+            heap.insert(contentsOf: runWithEl(
+                valves: valves,
+                maxOpen: maxOpen,
+                maxFlow: maxFlow,
+                fastEdges: fastEdges,
+                state: state,
+                currentMax: &currentMax
+            ))
+        }
+        return currentMax
+    }
+    
     public func part01() -> String {
         let valves = parse()
         var cache = [State: Int]()
@@ -256,14 +268,12 @@ public struct Day16: Day {
     
     public func part02() -> String {
         let valves = parse()
-        var cache = [StateWithEl: Int]()
-        var currentMax = 0
-        let maxFlow = runWithEl(
+        let maxFlow = dijkstra(
             valves: valves,
             maxOpen: valves.filter { $0.flow != 0 }.count,
             maxFlow: valves.map(\.flow).reduce(0, +),
             fastEdges: shrink(valves: valves),
-            state: .init(
+            initialState: .init(
                 myTargetIdx: valves.firstIndex(where: { $0.name == "AA" })!,
                 myTargetLeft: 0,
                 elTargetIdx: valves.firstIndex(where: { $0.name == "AA" })!,
@@ -273,9 +283,7 @@ public struct Day16: Day {
                 currentFlow: 0,
                 openCount: 0,
                 openValves: 0
-            ),
-            cache: &cache,
-            currentMax: &currentMax
+            )
         )
         return "\(maxFlow)"
     }
