@@ -24,16 +24,21 @@ struct TestData {
 
 final class Days: XCTestCase {
     
-    func testDay<D: Day>(dayType: D.Type, data: TestData) {
-        func run(day: D, kind: DataKind) {
+    func testDay(_ dayNum: Int) throws {
+        guard let dayType = allDays.first(where: { $0.number == dayNum }) else {
+            throw XCTSkip("Not yet implemented")
+        }
+        let data = TestData(day: dayNum)
+
+        func run(day: Day, kind: DataKind) {
             if let result = data.resultData.results[.init(part: .part1, kind: kind)] {
-                XCTAssertEqual(day.part01(), result, "\(D.self) has incorrect result for part 1 in \(kind)")
+                XCTAssertEqual(day.part01(), result, "Day \(dayNum) has incorrect result for part 1 in \(kind)")
             }
             if let result = data.resultData.results[.init(part: .part2, kind: kind)] {
-                XCTAssertEqual(day.part02(), result, "\(D.self) has incorrect result for part 2 in \(kind)")
+                XCTAssertEqual(day.part02(), result, "Day \(dayNum) has incorrect result for part 2 in \(kind)")
             }
         }
-        
+
         for (idx, sample) in data.taskData.samples.enumerated() {
             let day = dayType.init(input: sample)
             run(day: day, kind: .sample(idx: idx))
@@ -46,95 +51,103 @@ final class Days: XCTestCase {
     }
 
     func testDay01() throws {
-        testDay(dayType: Day01.self, data: TestData(day: 1))
+        try testDay(1)
     }
     
     func testDay02() throws {
-        testDay(dayType: Day02.self, data: TestData(day: 2))
+        try testDay(2)
     }
     
     func testDay03() throws {
-        testDay(dayType: Day03.self, data: TestData(day: 3))
+        try testDay(3)
     }
     
     func testDay04() throws {
-        testDay(dayType: Day04.self, data: TestData(day: 4))
+        try testDay(4)
     }
     
     func testDay05() throws {
-        testDay(dayType: Day05.self, data: TestData(day: 5))
+        try testDay(5)
     }
     
     func testDay06() throws {
-        testDay(dayType: Day06.self, data: TestData(day: 6))
+        try testDay(6)
     }
     
     func testDay07() throws {
-        testDay(dayType: Day07.self, data: TestData(day: 7))
+        try testDay(7)
     }
     
     func testDay08() throws {
-        testDay(dayType: Day08.self, data: TestData(day: 8))
+        try testDay(8)
     }
     
     func testDay09() throws {
-        testDay(dayType: Day09.self, data: TestData(day: 9))
+        try testDay(9)
     }
     
     func testDay10() throws {
-        testDay(dayType: Day10.self, data: TestData(day: 10))
+        try testDay(10)
     }
     
     func testDay11() throws {
-        testDay(dayType: Day11.self, data: TestData(day: 11))
+        try testDay(11)
     }
     
     func testDay12() throws {
-        testDay(dayType: Day12.self, data: TestData(day: 12))
+        try testDay(12)
     }
     
     func testDay13() throws {
-        testDay(dayType: Day13.self, data: TestData(day: 13))
+        try testDay(13)
     }
     
     func testDay14() throws {
-        testDay(dayType: Day14.self, data: TestData(day: 14))
+        try testDay(14)
     }
     
     func testDay15() throws {
-        testDay(dayType: Day15.self, data: TestData(day: 15))
+        try testDay(15)
     }
     
     func testDay16() throws {
-        testDay(dayType: Day16.self, data: TestData(day: 16))
+        try testDay(16)
     }
     
     func testDay17() throws {
-        testDay(dayType: Day17.self, data: TestData(day: 17))
+        try testDay(17)
     }
     
     func testDay18() throws {
-        testDay(dayType: Day18.self, data: TestData(day: 18))
+        try testDay(18)
     }
     
     func testDay19() throws {
-        testDay(dayType: Day19.self, data: TestData(day: 19))
+        try testDay(19)
     }
     
     func testDay20() throws {
-        testDay(dayType: Day20.self, data: TestData(day: 20))
+        try testDay(20)
     }
     
     func testDay21() throws {
-        testDay(dayType: Day21.self, data: TestData(day: 21))
+        try testDay(21)
     }
     
     func testDay22() throws {
-        testDay(dayType: Day22.self, data: TestData(day: 22))
+        try testDay(22)
     }
     
     func testDay23() throws {
-        testDay(dayType: Day23.self, data: TestData(day: 23))
+        try testDay(23)
+    }
+
+    func testDay24() throws {
+        try testDay(24)
+    }
+
+    func testDay25() throws {
+        try testDay(25)
     }
 
 }

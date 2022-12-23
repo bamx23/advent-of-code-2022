@@ -9,6 +9,8 @@ import Foundation
 import Shared
 
 public struct Day04: Day {
+    static public let number = 4
+
     let input: String
     
     public init(input: String) {

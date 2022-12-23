@@ -8,6 +8,8 @@
 import Foundation
 
 public protocol Day {
+    static var number: Int { get }
+    
     init(input: String)
     
     func part01() -> String
