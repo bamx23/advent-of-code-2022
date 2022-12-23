@@ -30,4 +30,5 @@ import Input
 //runDay(dayType: Day19.self, data: FileTaskData(day: 19))
 //runDay(dayType: Day20.self, data: FileTaskData(day: 20))
 //runDay(dayType: Day21.self, data: FileTaskData(day: 21))
-runDay(dayType: Day22.self, data: FileTaskData(day: 22))
+//runDay(dayType: Day22.self, data: FileTaskData(day: 22))
+runDay(dayType: Day23.self, data: FileTaskData(day: 23))
