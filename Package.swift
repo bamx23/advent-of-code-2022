@@ -10,6 +10,9 @@ let package = Package(
             targets: ["Run"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-collections.git", branch: "release/1.1"),
+    ],
     targets: [
         .executableTarget(
             name: "Run",
@@ -40,6 +43,7 @@ let package = Package(
             name: "Days",
             dependencies: [
                 "Shared",
+                .product(name: "Collections", package: "swift-collections"),
             ]
         ),
         .target(name: "Shared"),
